@@ -38,9 +38,9 @@ var (
 )
 
 func init() {
+	initMetrics()
 	prometheus.MustRegister(httpRequestsTotal)
 	prometheus.MustRegister(httpRequestDuration)
-	prometheus.MustRegister(activeConnections)
 }
 
 func main() {
@@ -64,6 +64,7 @@ func main() {
 		
 		duration := time.Since(start).Seconds()
 		httpRequestDuration.WithLabelValues(r.Method, "/api/data").Observe(duration)
+		httpRequestSummary.WithLabelValues(r.Method, "/api/data").Observe(duration)
 		httpRequestsTotal.WithLabelValues(r.Method, "/api/data", "200").Inc()
 	})
 
