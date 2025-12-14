@@ -81,6 +81,9 @@ func main() {
 
 	http.Handle("/metrics", promhttp.Handler())
 
+	// Set SLO targets
+	setSLO("monitoring-service", 0.99, 0.5) // 99% availability, 500ms latency target
+
 	fmt.Println("Grafana Prometheus Monitoring service running on :8080")
 	startAlertEvaluation()
 	log.Fatal(http.ListenAndServe(":8080", nil))
