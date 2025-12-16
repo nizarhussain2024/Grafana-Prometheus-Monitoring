@@ -57,3 +57,4 @@ func setSLO(service string, availabilityTarget float64, latencyTarget float64) {
 	sloLatency.WithLabelValues(service).Set(latencyTarget)
 }
 
+
